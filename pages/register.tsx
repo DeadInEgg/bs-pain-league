@@ -2,14 +2,12 @@ import HeadDescritpion from '../components/atoms/HeadDescription'
 import Redirect from '../components/atoms/Redirect'
 import OfflineLayout from '../components/organisms/OfflineLayout'
 
-export default function Home() {
+export default function Register() {
   return (
     <>
       <HeadDescritpion />
       <OfflineLayout>
-        <div className="flex justify-center items-center h-full">
-          <Redirect text="Inscription" url="/register" isButton />
-        </div>
+        <Redirect text="<- Retour à l'accueil" url="/" />
       </OfflineLayout>
     </>
   )
