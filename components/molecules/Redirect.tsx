@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Button from '../atoms/Button'
 
 interface RedirectProps {
   url: string
@@ -14,9 +15,7 @@ export default function Redirect({
   return (
     <Link href={url}>
       {isButton ? (
-        <button className="bg-gray-900 text-slate-100 h-12 px-4 border border-slate-100 rounded-md shadow-lg">
-          {text}
-        </button>
+        <Button>{text}</Button>
       ) : (
         <p className="text-slate-100 underline underline-offset-4 hover:underline-offset-8">
           {text}
