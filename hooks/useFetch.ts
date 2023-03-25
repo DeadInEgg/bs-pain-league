@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { fetchApi } from '../libs/fetchApi'
+import { useRouter } from 'next/router'
 
 type UseFetchProps = {
   method?: string
@@ -7,11 +8,22 @@ type UseFetchProps = {
   url: string
 }
 
-export const useFetch = ({ method = 'GET', payload, url }: UseFetchProps) => {
+export type UseFetchResultProps<T> = {
+  data?: T
+  error: string
+  isLoading: boolean
+}
+
+export const useFetch = <T>({
+  method = 'GET',
+  payload,
+  url,
+}: UseFetchProps): UseFetchResultProps<T> => {
   const [data, setData] = useState()
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const withCredentials = url !== 'auth/login'
+  const router = useRouter()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,14 +34,18 @@ export const useFetch = ({ method = 'GET', payload, url }: UseFetchProps) => {
         setData(json)
       }
 
-      if ([401, 422].includes(response.status)) {
+      if ([422].includes(response.status)) {
         setError(json)
+      }
+
+      if ([401].includes(response.status)) {
+        router.push('/')
       }
     }
 
     fetchData().catch((err) => console.log(err))
     setIsLoading(false)
-  }, [method, url, withCredentials, payload])
+  }, [method, url, withCredentials, payload, router])
 
   return { data, error, isLoading }
 }

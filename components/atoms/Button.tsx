@@ -4,7 +4,7 @@ interface ButtonProps {
 
 export default function Button({ children }: ButtonProps) {
   return (
-    <button className="bg-gray-900 text-slate-100 h-12 px-4 border border-slate-100 rounded-md shadow-lg">
+    <button className="bg-gradient-to-r from-yellow-500 to-amber-600 text-zinc-50 hover:from-yellow-600 hover:to-amber-700 h-12 px-4 rounded-lg ">
       {children}
     </button>
   )
