@@ -1,5 +1,5 @@
 import HeadDescritpion from '../components/atoms/HeadDescription'
-import Redirect from '../components/atoms/Redirect'
+import Redirect from '../components/molecules/Redirect'
 import OfflineLayout from '../components/organisms/OfflineLayout'
 
 export default function Register() {
