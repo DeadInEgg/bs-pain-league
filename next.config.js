@@ -11,5 +11,15 @@ module.exports = () => {
   }
   return {
     rewrites,
+    images: {
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'cdn-old.brawlify.com',
+          port: '',
+          pathname: '/**',
+        },
+      ],
+    },
   }
 }

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import Drawer from '../molecules/Drawer'
+import Navbar from '../molecules/Navbar'
 
 interface OnlineLayout {
   children: ReactNode
@@ -8,8 +8,10 @@ interface OnlineLayout {
 export default function OnlineLayout({ children }: OnlineLayout) {
   return (
     <>
-      <Drawer />
-      <div className="w-screen h-screen bg-slate-500 p-5 ml-36">{children}</div>
+      <Navbar />
+      <div className="w-full h-full bg-gradient-to-b from-gray-700 to-gray-900 p-8 pt-20">
+        {children}
+      </div>
     </>
   )
 }

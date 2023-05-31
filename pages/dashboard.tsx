@@ -1,28 +1,28 @@
-import { useRouter } from 'next/router'
 import HeadDescritpion from '../components/atoms/HeadDescription'
 import OnlineLayout from '../components/organisms/OnlineLayout'
 import { useFetch } from '../hooks/useFetch'
-import { fetchApi } from '../libs/fetchApi'
+import Button from '../components/atoms/Button'
+import Input from '../components/atoms/Input'
+import Form from '../components/molecules/Form'
+import Title from '../components/atoms/Title'
+import Redirect from '../components/molecules/Redirect'
+
+interface Tracker {
+  name: string
+  hash: string
+  tag?: string
+}
 
 export default function Dashboard() {
-  const router = useRouter()
-
-  const {
-    data: user,
-    isLoading,
-    error,
-  } = useFetch({
+  const { data: user, isLoading: isUserLoading } = useFetch({
     url: 'users/me',
   })
 
-  const logout = async () => {
-    const res = await fetchApi({ url: 'auth/logout' })
-    if (res.status === 200) router.push('/')
-  }
+  const { data: trackers, isLoading: isTrackersLoading } = useFetch<Tracker[]>({
+    url: 'trackers',
+  })
 
-  if (error) router.push('/')
-
-  if (!user || isLoading) {
+  if (!user || !trackers || isUserLoading || isTrackersLoading) {
     return <div>Loading...</div>
   }
 
@@ -30,13 +30,28 @@ export default function Dashboard() {
     <>
       <HeadDescritpion />
       <OnlineLayout>
-        <button
-          onClick={logout}
-          className="bg-gray-900 text-slate-100 h-12 px-4 border border-slate-100 rounded-md shadow-lg"
-        >
-          Déconnexion
-        </button>
-        <div className="flex justify-center items-center h-full">Online</div>
+        <div className="flex flex-col md:flex-row justify-around items-center h-full">
+          <div className="flex flex-col items-center">
+            <Title>Trackers : </Title>
+            <ul>
+              {trackers.map((tracker) => (
+                <li key={tracker.hash}>
+                  <Redirect
+                    url={`tracker/${tracker.hash}/games`}
+                    text={tracker.name}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="flex flex-col items-center">
+            <Form url="/trackers">
+              <Input id="name" name="name" placeholder="Nom du tracker" />
+              <Input id="tag" name="tag" placeholder="Tag du joueur" />
+              <Button>Créer</Button>
+            </Form>
+          </div>
+        </div>
       </OnlineLayout>
     </>
   )
