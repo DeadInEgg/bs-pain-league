@@ -5,6 +5,7 @@ import Button from '../components/atoms/Button'
 import Input from '../components/atoms/Input'
 import Form from '../components/molecules/Form'
 import Title from '../components/atoms/Title'
+import Redirect from '../components/molecules/Redirect'
 
 interface Tracker {
   name: string
@@ -29,19 +30,24 @@ export default function Dashboard() {
     <>
       <HeadDescritpion />
       <OnlineLayout>
-        <div className="flex justify-around items-center h-full">
+        <div className="flex flex-col md:flex-row justify-around items-center h-full">
           <div className="flex flex-col items-center">
             <Title>Trackers : </Title>
             <ul>
               {trackers.map((tracker) => (
-                <li key={tracker.hash}>{tracker.name}</li>
+                <li key={tracker.hash}>
+                  <Redirect
+                    url={`tracker/${tracker.hash}/games`}
+                    text={tracker.name}
+                  />
+                </li>
               ))}
             </ul>
           </div>
           <div className="flex flex-col items-center">
-            <Form url="/trackers" redirectUrl="/trackers">
+            <Form url="/trackers">
               <Input id="name" name="name" placeholder="Nom du tracker" />
-              <Input id="tag" name="tag" placeholder="Tag du joueur " />
+              <Input id="tag" name="tag" placeholder="Tag du joueur" />
               <Button>Créer</Button>
             </Form>
           </div>
