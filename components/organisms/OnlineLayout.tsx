@@ -9,7 +9,7 @@ export default function OnlineLayout({ children }: OnlineLayout) {
   return (
     <>
       <Navbar />
-      <div className="w-screen h-screen bg-gradient-to-b from-gray-700 to-gray-900 p-5">
+      <div className="w-full h-full bg-gradient-to-b from-gray-700 to-gray-900 p-8 pt-20">
         {children}
       </div>
     </>
