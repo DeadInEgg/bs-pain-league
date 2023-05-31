@@ -6,6 +6,7 @@ type UseFetchProps = {
   method?: string
   payload?: Record<string, unknown>
   url: string
+  queryParams?: Record<string, string>
 }
 
 export type UseFetchResultProps<T> = {
@@ -18,6 +19,7 @@ export const useFetch = <T>({
   method = 'GET',
   payload,
   url,
+  queryParams,
 }: UseFetchProps): UseFetchResultProps<T> => {
   const [data, setData] = useState()
   const [error, setError] = useState('')
@@ -27,7 +29,7 @@ export const useFetch = <T>({
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetchApi({ url, method, payload })
+      const response = await fetchApi({ url, method, payload, queryParams })
       const json = await response.json()
 
       if ([200, 201, 204, 304].includes(response.status)) {
@@ -45,7 +47,7 @@ export const useFetch = <T>({
 
     fetchData().catch((err) => console.log(err))
     setIsLoading(false)
-  }, [method, url, withCredentials, payload, router])
+  }, [method, url, withCredentials, payload, router, queryParams])
 
   return { data, error, isLoading }
 }
